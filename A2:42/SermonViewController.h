@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FirstViewController : UIViewController
+@interface SermonViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UIButton *fullertonButton;
 
 @end

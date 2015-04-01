@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
+#import <AudioToolbox/AudioToolbox.h>
 
-@interface SecondViewController : UIViewController
+#import <AVFoundation/AVFoundation.h>
+@interface SecondViewController : UIViewController{
+    AVPlayer *audioPlayer;
+    AVAudioPlayer *player;
+}
 
 @end
+
+
+
