@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SWRevealViewController.h"
 
-@interface DownloadViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface DownloadViewController : UIViewController <UITableViewDelegate, UITableViewDataSource,SWRevealViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *table;
+
 
 @end

@@ -7,8 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SWRevealViewController.h"
 
-@interface SermonViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UIButton *fullertonButton;
+@interface SermonViewController : UIViewController <SWRevealViewControllerDelegate>
+
+@property (weak,nonatomic) IBOutlet UIBarButtonItem *barButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *infoButton;
+@property (weak, nonatomic) NSString *seen;
+
+- (IBAction)fullertonPressed:(id)sender;
+- (IBAction)piperPressed:(id)sender;
 
 @end

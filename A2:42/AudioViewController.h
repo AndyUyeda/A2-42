@@ -9,18 +9,23 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
+#import <MediaPlayer/MPMediaItem.h>
+#import <MediaPlayer/MPNowPlayingInfoCenter.h>
 
-@interface AudioViewController : UIViewController <NSURLConnectionDelegate>{
+@interface AudioViewController : UIViewController <NSURLConnectionDelegate,UIWebViewDelegate>{
     AVPlayer *audioPlayer;
     NSTimer* timer;
     NSMutableData *fileData;
 }
 
 
-@property (weak, nonatomic)  NSString *theTitle;
-@property (weak, nonatomic)  NSString *teacher;
+@property (strong, nonatomic)  NSString *theTitle;
+@property (strong, nonatomic)  NSString *teacher;
+@property (strong, nonatomic)  NSString *tye;
+@property (strong, nonatomic)  NSString *corner;
+@property (strong, nonatomic)  NSString *imman;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
-@property (weak, nonatomic)  NSString *websiteURL;
+@property (strong, nonatomic)  NSString *websiteURL;
 @property (weak, nonatomic) IBOutlet UILabel *currentSermon;
 @property (weak, nonatomic) IBOutlet UISlider *slider;
 @property (weak, nonatomic) IBOutlet UILabel *startTime;
@@ -35,7 +40,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *undoButton;
 @property (weak, nonatomic) IBOutlet UIButton *goButton;
 @property (weak, nonatomic) IBOutlet UIProgressView *showProgress;
-
+@property (weak, nonatomic) IBOutlet UIButton *favoriteStar;
+@property (weak,nonatomic) IBOutlet UIBarButtonItem *barButton;
 
 
 - (IBAction)sliderChanged:(id)sender;
@@ -45,6 +51,8 @@
 - (IBAction)sought:(id)sender;
 - (IBAction)downloaded:(id)sender;
 - (IBAction)tweeted:(id)sender;
+- (IBAction)favorited:(id)sender;
+- (IBAction)copyLink:(id)sender;
 
 
 

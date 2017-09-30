@@ -13,12 +13,22 @@
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic)  NSString *date;
-@property (weak, nonatomic)  NSString *dateURL;
-@property (weak, nonatomic)  NSString *teacher;
+@property (strong, nonatomic)  NSString *date;
+@property (strong, nonatomic)  NSString *imman;
+@property (strong, nonatomic)  NSString *type;
+@property (strong, nonatomic)  NSString *dateURL;
+@property (strong, nonatomic)  NSString *teacher;
 @property (weak, nonatomic) IBOutlet UIImageView *theGateLogo;
 @property (weak, nonatomic) IBOutlet UIImageView *ibcLogo;
 @property (weak, nonatomic) IBOutlet UIImageView *graceCommunityLogo;
 @property (weak, nonatomic) IBOutlet UIImageView *bluePrintLogo;
+@property (weak, nonatomic) IBOutlet UIImageView *dglogo;
+@property (weak, nonatomic) IBOutlet UIImageView *hwlogo;
+@property (weak, nonatomic) IBOutlet UIImageView *heartCryLogo;
+@property (weak, nonatomic) IBOutlet UIImageView *gccLogo;
+@property (weak, nonatomic) IBOutlet UIImageView *trinityLogo;
+@property (weak, nonatomic) IBOutlet UIImageView *cornerStoneLogo;
+@property (weak, nonatomic) IBOutlet UIImageView *bridgepointLogo;
+@property (weak, nonatomic) IBOutlet UIImageView *holyCityLogo;
 
 @end

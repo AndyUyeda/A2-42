@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *selectButton;
 
 - (IBAction)dateSelected:(id)sender;
+- (IBAction)onOurHearts:(id)sender;
 
 - (IBAction)sermonTapped;
 

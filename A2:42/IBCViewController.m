@@ -15,11 +15,12 @@
 @end
 
 @implementation IBCViewController{
-
+    
 }
 NSString *text;
 NSString *websiteURL;
 int selectedInex;
+bool onOurHearts;
 NSMutableArray* spaceArray;
 NSMutableArray* enterArray;
 
@@ -36,6 +37,11 @@ NSMutableArray* enterArray;
 
 - (void)viewDidLoad
 {
+    
+    
+    [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Georgia" size:14.0f], NSFontAttributeName, nil] forState:UIControlStateNormal];
+    
+    onOurHearts = false;
     //NSLog(@"still");
     pickerViewArray = [NSMutableArray array];
     dateWebsiteArray = [NSMutableArray array];
@@ -45,9 +51,10 @@ NSMutableArray* enterArray;
     //NSLog(@"%d", [pickerViewArray count]);
     
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    // Do any additional setup after loading the view, typically from a nib.
     
     self.navigationItem.title = @"Ryan Fullerton";
+    
     NSURL *url = [NSURL URLWithString:@"http://www.ibclouisville.org/multimedia-speaker/ryan-fullerton/"];
     NSString *webData = [NSString stringWithContentsOfURL:url];
     NSError *error;
@@ -61,11 +68,13 @@ NSMutableArray* enterArray;
         // implementation continues ...
     }
     else{
+        [pickerViewArray addObject:@"All Sermons"];
+        [dateWebsiteArray addObject:@"http://www.ibclouisville.org/multimedia-speaker/ryan-fullerton/"];
         MEStringSearcher* searcher = [[MEStringSearcher alloc] initWithString:webData];
         [searcher moveToString:@"Sermons by Ryan Fullerton"];
         websiteURL = [searcher getStringWithLeftBound:@"href=\"" rightBound:@"\""];
         text = [searcher getStringWithLeftBound:@"title=\"" rightBound:@"\">"];
-        //NSLog(@"%@",websiteURL);
+        NSLog(@"%@",websiteURL);
         text = [self parseTitle:text];
         NSString* st = [self resizeTheTitle:text];
         [currentSermon setTitle:st forState:UIControlStateNormal];
@@ -74,8 +83,8 @@ NSMutableArray* enterArray;
         BOOL done = false;
         while (!done) {
             NSString *dateURL = [searcher getStringWithLeftBound:@"href='" rightBound:@"'"];
-            NSString *date = [searcher getStringWithLeftBound:@"title='" rightBound:@"'>"];
-            if(date == nil)
+            NSString *date = [searcher getStringWithLeftBound:@">" rightBound:@"<"];
+            if(dateURL == nil)
                 done = true;
             else{
                 [dateWebsiteArray addObject:dateURL];
@@ -88,7 +97,7 @@ NSMutableArray* enterArray;
     currentSermon.titleLabel.numberOfLines = 0;
     currentSermon.titleLabel.textAlignment = NSTextAlignmentCenter;
     [currentSermon sizeToFit];
-    currentSermon.center = CGPointMake(160, 192);
+    currentSermon.center = CGPointMake([self view].center.x, 192);
     
     //NSLog(@"%f",currentSermon.center.x);
     
@@ -111,13 +120,27 @@ NSMutableArray* enterArray;
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
     return [pickerViewArray count];
 }
-- (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    NSString *title = [pickerViewArray objectAtIndex:row];
-    NSAttributedString *attString = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+/*- (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
+ {
+ NSString *title = [pickerViewArray objectAtIndex:row];
+ NSAttributedString *attString = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+ 
+ return attString;
+ 
+ }*/
+-(UIView*)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view{
     
-    return attString;
-    
+    UILabel* tView = (UILabel*)view;
+    if (!tView){
+        tView = [[UILabel alloc] init];
+        // Setup label properties - frame, font, colors etc
+        [tView setFont:[UIFont fontWithName:@"Georgia" size:23.0]];
+        tView.textAlignment = NSTextAlignmentCenter;
+        tView.textColor = [UIColor whiteColor];
+    }
+    // Fill the label text here
+    tView.text = [pickerViewArray objectAtIndex:row];
+    return tView;
 }
 
 -(NSString *)parseTitle: (NSString *)theTitle
@@ -372,6 +395,11 @@ NSMutableArray* enterArray;
     }
 }
 
+- (IBAction)onOurHearts:(id)sender {
+    onOurHearts = true;
+    [self performSegueWithIdentifier:@"date" sender:self];
+}
+
 - (IBAction)sermonTapped {
     if(currentSermon.isSelected){
         [self performSegueWithIdentifier:@"date" sender:self];
@@ -385,16 +413,27 @@ NSMutableArray* enterArray;
         audio = [segue destinationViewController];
         audio.theTitle = text;
         audio.teacher = @"Ryan Fullerton";
-        audio.websiteURL = websiteURL;
+        NSString *w = [NSString stringWithFormat:@"%@%@",websiteURL, @"?player=audio"];
+        NSLog(@"%@",w);
+        audio.websiteURL = [NSString stringWithFormat:@"%@%@",websiteURL, @"?player=audio"];
         
     }
     if([segue.identifier isEqualToString:(@"date")]){
-        DateViewController *datee = [[DateViewController alloc]init];
-        datee = [segue destinationViewController];
-        datee.date = [pickerViewArray objectAtIndex:selectedInex];
-        datee.dateURL = [dateWebsiteArray objectAtIndex:selectedInex];
-        datee.teacher = @"Ryan Fullerton";
-        
+        if(onOurHearts){
+            DateViewController *datee = [[DateViewController alloc]init];
+            datee = [segue destinationViewController];
+            datee.date = @"On Our Hearts Podcast";
+            datee.dateURL = @"http://www.ibclouisville.org/category/on-our-hearts/";
+            datee.teacher = @"Ryan Fullerton";
+        }
+        else{
+            DateViewController *datee = [[DateViewController alloc]init];
+            datee = [segue destinationViewController];
+            datee.date = [pickerViewArray objectAtIndex:selectedInex];
+            datee.dateURL = [dateWebsiteArray objectAtIndex:selectedInex];
+            datee.teacher = @"Ryan Fullerton";
+        }
+        onOurHearts = false;
     }
 }
 - (NSString *)resizeTheTitle: (NSString*) string1{

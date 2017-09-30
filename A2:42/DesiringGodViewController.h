@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIPickerView *apjPickerView;
 @property (weak, nonatomic) IBOutlet UIPickerView *poemPickerView;
 @property (weak, nonatomic) IBOutlet UIPickerView *sermonPickerView;
+@property (weak, nonatomic) IBOutlet UIPickerView *bioPickerView;
 @property (weak, nonatomic) IBOutlet UILabel *listenToButton;
 
 
@@ -26,5 +27,8 @@
 - (IBAction)sermonTapped:(id)sender;
 
 - (IBAction)segmentedControlAction:(id)sender;
+- (IBAction)selected:(id)sender;
+
+
 
 @end

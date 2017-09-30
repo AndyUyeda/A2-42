@@ -7,11 +7,16 @@
 //
 
 #import "AppDelegate.h"
+@import Firebase;
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [FIRApp configure];
+    [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Georgia" size:14.0f], NSFontAttributeName, nil] forState:UIControlStateNormal];
+    
+
     // Override point for customization after application launch.
     return YES;
 }
